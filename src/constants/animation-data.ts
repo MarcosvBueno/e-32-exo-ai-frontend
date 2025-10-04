@@ -1,3 +1,5 @@
+import { PlanetMetric } from '@/types/exoplanet';
+
 export const ANIMATION_CONFIG = {
   duration: {
     fast: 0.6,
@@ -11,3 +13,11 @@ export const ANIMATION_CONFIG = {
   },
   easing: [0.22, 1, 0.36, 1] as const,
 } as const;
+
+export const EARTH_METRICS: PlanetMetric[] = [
+  { title: 'Planet', value: 'Earth' },
+  { title: 'Mass', value: '5.97 × 10²⁴ kg' },
+  { title: 'Diameter', value: '12,742 km' },
+  { title: 'Temperature', value: '15°C' },
+  { title: 'Orbital period', value: '365 days' },
+];
