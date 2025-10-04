@@ -2,6 +2,7 @@ import { Hero } from '@/components/hero';
 import { ExoplanetKnowledgeSection } from '@/components/exoplanet-knowledge-section';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ExoplanetForm } from '@/components/forms/user-form';
+import { ScientistForm } from '@/components/forms/scientist-form';
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
             <ExoplanetForm />
           </TabsContent>
           <TabsContent value="video" className="w-full">
-            world
+            <ScientistForm />
           </TabsContent>
         </Tabs>
       </div>
