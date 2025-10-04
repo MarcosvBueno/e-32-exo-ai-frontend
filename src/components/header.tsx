@@ -1,11 +1,12 @@
 'use client';
 
-
-import * as React from "react";
-import Link from "next/link";
+import * as React from 'react';
+import Link from 'next/link';
 import { motion, type Variants } from 'framer-motion';
 import type { HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/lib/i18n/language-context';
+import { LanguageToggle } from './language-toggle';
 
 interface HeaderProps extends HTMLMotionProps<'header'> {
   links?: Array<{ href: string; label: string }>;
@@ -22,7 +23,6 @@ const headerVariants: Variants = {
     },
   },
 };
-
 
 const navVariants: Variants = {
   hidden: { opacity: 0 },
@@ -48,10 +48,12 @@ const navItemVariants: Variants = {
 };
 
 function Header({ links, className, ...props }: HeaderProps) {
+  const { t } = useLanguage();
+
   const navLinks = links ?? [
-    { href: '#home', label: 'Home' },
-    { href: '#insights', label: 'Exoplanet Insights' },
-    { href: '#crew', label: 'Detection Form' },
+    { href: '#home', label: t('header.nav.home') },
+    { href: '#insights', label: t('header.nav.insights') },
+    { href: '#form', label: t('header.nav.form') },
   ];
 
   return (
@@ -60,7 +62,7 @@ function Header({ links, className, ...props }: HeaderProps) {
       animate="visible"
       variants={headerVariants}
       className={cn(
-        "fixed top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl",
+        'fixed top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl',
         className
       )}
       {...props}
@@ -73,7 +75,7 @@ function Header({ links, className, ...props }: HeaderProps) {
           className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.35em] text-white"
         >
           <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.85)]" />
-          E-32 
+          E-32
         </motion.div>
 
         <motion.nav
@@ -82,7 +84,7 @@ function Header({ links, className, ...props }: HeaderProps) {
           animate="visible"
           className="hidden items-center gap-6 text-xs font-medium uppercase tracking-[0.3em] text-white/70 md:flex"
         >
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <motion.div key={link.href} variants={navItemVariants}>
               <Link
                 href={link.href}
@@ -100,11 +102,12 @@ function Header({ links, className, ...props }: HeaderProps) {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           className="flex items-center gap-3"
         >
+          <LanguageToggle />
           <Link
-            href="#home"
+            href="#form"
             className="rounded-full border border-cyan-400/60 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100 transition-all hover:border-cyan-200 hover:text-white"
           >
-            Join the mission
+            {t('header.cta')}
           </Link>
         </motion.div>
       </div>

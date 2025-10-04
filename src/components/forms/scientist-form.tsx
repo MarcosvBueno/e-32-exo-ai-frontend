@@ -17,8 +17,7 @@ import type {
   ExoplanetPredictionComparisonResponse,
 } from '@/types/exoplanet';
 import { scientistFormSchema } from './schemas/scientist-form-schema';
-
-
+import { useLanguage } from '@/lib/i18n/language-context';
 
 type ScientistFormValues = z.infer<typeof scientistFormSchema>;
 
@@ -39,84 +38,87 @@ const defaultValues: ScientistFormValues = {
   stellar_teff_bin: 5518,
 };
 
-const fieldConfigs: Array<{
+function getFieldConfigs(t: (key: string) => string): Array<{
   name: keyof ScientistFormValues;
   label: string;
   placeholder: string;
-}> = [
-  {
-    name: 'orbital_period_days',
-    label: 'Orbital period (days)',
-    placeholder: '289.9',
-  },
-  {
-    name: 'transit_depth',
-    label: 'Transit depth',
-    placeholder: '192',
-  },
-  {
-    name: 'transit_duration',
-    label: 'Transit duration (hours)',
-    placeholder: '7.5',
-  },
-  {
-    name: 'planet_radius_re',
-    label: 'Planet radius (R⊕)',
-    placeholder: '2.4',
-  },
-  {
-    name: 'planet_mass_me',
-    label: 'Planet mass (M⊕)',
-    placeholder: '66.0',
-  },
-  {
-    name: 'stellar_teff_k',
-    label: 'Stellar temperature (K)',
-    placeholder: '5518',
-  },
-  {
-    name: 'stellar_radius_rsun',
-    label: 'Stellar radius (R☉)',
-    placeholder: '0.98',
-  },
-  {
-    name: 'stellar_mass_msun',
-    label: 'Stellar mass (M☉)',
-    placeholder: '0.97',
-  },
-  {
-    name: 'radius_ratio',
-    label: 'Radius ratio (Rp/Rs)',
-    placeholder: '0.0245',
-  },
-  {
-    name: 'semi_major_axis_au',
-    label: 'Semi-major axis (AU)',
-    placeholder: '0.85',
-  },
-  {
-    name: 'equilibrium_temp_recalc_k',
-    label: 'Equilibrium temp. (K)',
-    placeholder: '295',
-  },
-  {
-    name: 'log_orbital_period',
-    label: 'Log orbital period',
-    placeholder: '2.46',
-  },
-  {
-    name: 'period_mass_interaction',
-    label: 'Period-mass interaction',
-    placeholder: '281.6',
-  },
-  {
-    name: 'stellar_teff_bin',
-    label: 'Stellar temperature bin (K)',
-    placeholder: '5518',
-  },
-];
+}> {
+  return [
+    {
+      name: 'orbital_period_days',
+      label: t('form.field.orbital_period'),
+      placeholder: '289.9',
+    },
+    {
+      name: 'transit_depth',
+      label: t('form.field.transit_depth'),
+      placeholder: '192',
+    },
+    {
+      name: 'transit_duration',
+      label: t('form.field.transit_duration'),
+      placeholder: '7.5',
+    },
+    {
+      name: 'planet_radius_re',
+      label: t('form.field.planet_radius'),
+      placeholder: '2.4',
+    },
+    {
+      name: 'planet_mass_me',
+      label: t('form.field.planet_mass'),
+      placeholder: '66.0',
+    },
+    {
+      name: 'stellar_teff_k',
+      label: t('form.field.stellar_temperature'),
+      placeholder: '5518',
+    },
+    {
+      name: 'stellar_radius_rsun',
+      label: t('form.field.stellar_radius'),
+      placeholder: '0.98',
+    },
+    {
+      name: 'stellar_mass_msun',
+      label: t('form.field.stellar_mass'),
+      placeholder: '0.97',
+    },
+    {
+      name: 'radius_ratio',
+      label: t('form.field.radius_ratio'),
+      placeholder: '0.0245',
+    },
+    {
+      name: 'semi_major_axis_au',
+      label: t('form.field.semi_major_axis'),
+      placeholder: '0.85',
+    },
+    {
+      name: 'equilibrium_temp_recalc_k',
+      label: t('form.field.equilibrium_temp'),
+      placeholder: '295',
+    },
+    {
+      name: 'log_orbital_period',
+      label: t('form.field.log_orbital_period'),
+      placeholder: '2.46',
+    },
+    {
+      name: 'period_mass_interaction',
+      label: t('form.field.period_mass_interaction'),
+      placeholder: '281.6',
+    },
+    {
+      name: 'stellar_teff_bin',
+      label: t('form.field.stellar_teff_bin'),
+      placeholder: '5518',
+    },
+  ];
+}
 
 export function ScientistForm() {
+  const { t } = useLanguage();
   const [detection, setDetection] = useState<DetectionResult | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [nasaVideoLink, setNasaVideoLink] = useState<string | null>(null);
@@ -147,31 +149,31 @@ export function ScientistForm() {
     const planet = detection.prediction.planet;
 
     return [
-      { title: 'Classification', value: detection.label },
+      { title: t('metrics.classification'), value: detection.label },
       {
-        title: 'Radius (R⊕)',
+        title: t('metrics.radius'),
         value: planet.radius_re !== null ? planet.radius_re.toFixed(2) : '--',
       },
       {
-        title: 'Mass (M⊕)',
+        title: t('metrics.mass'),
         value: planet.mass_me !== null ? planet.mass_me.toFixed(2) : '--',
       },
       {
-        title: 'Equilibrium temp.',
+        title: t('metrics.equilibrium_temp'),
         value:
           planet.equilibrium_temp_k !== null
             ? `${planet.equilibrium_temp_k.toFixed(0)} K`
             : '--',
       },
       {
-        title: 'Insolation',
+        title: t('metrics.insolation'),
         value:
           planet.insolation_earth !== null
             ? planet.insolation_earth.toFixed(2)
             : '--',
       },
     ];
-  }, [detection]);
+  }, [detection, t]);
 
   function handleReset() {
     reset(defaultValues);
@@ -253,13 +255,13 @@ export function ScientistForm() {
             {/* Header */}
             <header className="mb-8 space-y-4 text-center">
               <p className="text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300/80">
-                E-32 scientific detector
+                {t('form.scientist.subtitle')}
               </p>
               <h2 className="text-3xl xl:text-3xl 2xl:text-3xl font-semibold tracking-tight">
-                Advanced exoplanet analysis
+                {t('form.scientist.title')}
               </h2>
               <p className="mx-auto max-w-3xl text-sm xl:text-sm 2xl:text-sm text-muted-foreground">
-                Input detailed scientific parameters for a deeper analysis. Every field runs through our advanced machine learning ensemble.
+                {t('form.scientist.description')}
               </p>
             </header>
 
@@ -269,7 +271,7 @@ export function ScientistForm() {
               className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-10 lg:p-12 shadow-2xl backdrop-blur"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
-                {fieldConfigs.map(field => {
+                {getFieldConfigs(t).map(field => {
                   const fieldError = errors[field.name];
 
                   return (
@@ -314,7 +316,9 @@ export function ScientistForm() {
                     disabled={isSubmitting}
                     className="inline-flex items-center justify-center rounded-full border border-cyan-400/60 px-6 xl:px-6 py-2.5 xl:py-2.5 text-xs xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.32em] text-cyan-100 transition hover:border-cyan-200 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {isSubmitting ? 'Analyzing…' : 'Analyze data'}
+                    {isSubmitting
+                      ? t('form.button.submitting')
+                      : t('form.button.submit')}
                   </button>
 
                   <button
@@ -322,7 +326,7 @@ export function ScientistForm() {
                     onClick={handleReset}
                     className="text-xs xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground transition hover:text-white"
                   >
-                    Clear inputs
+                    {t('form.button.clear')}
                   </button>
                 </div>
               </div>
@@ -333,50 +337,50 @@ export function ScientistForm() {
         {/* Results Section */}
         {hasDetectedExoplanet && detection && (
           <div className="space-y-8">
-          <PlanetDisplay
-            hasDetectedExoplanet={hasDetectedExoplanet}
-            detection={detection}
-            exoplanetMetrics={exoplanetMetrics}
-            stellarTemperature={stellarTemperature}
-            transitDepth={transitDepth}
-            orbitalPeriod={orbitalPeriod}
-          />
+            <PlanetDisplay
+              hasDetectedExoplanet={hasDetectedExoplanet}
+              detection={detection}
+              exoplanetMetrics={exoplanetMetrics}
+              stellarTemperature={stellarTemperature}
+              transitDepth={transitDepth}
+              orbitalPeriod={orbitalPeriod}
+            />
 
-          {nasaVideoLink ? (
-            <div className="w-full flex justify-center p-4 flex-col gap-4">
-              <header className="text-center">
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
-                  Exoplanet visualization
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                  Explore the planet in detail
-                </h2>
-                <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                  Dive into the detected exoplanet using NASA Eyes on Exoplanets.
-                </p>
-              </header>
-              <div className="w-full max-w-7xl rounded-2xl border border-border">
-                <iframe
-                  src={nasaVideoLink}
-                  width="800"
-                  height="500"
-                  style={{ border: 'none' }}
-                  className="w-full max-w-7xl rounded-2xl border border-red-500"
-                ></iframe>
+            {nasaVideoLink ? (
+              <div className="w-full flex justify-center p-4 flex-col gap-4">
+                <header className="text-center">
+                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
+                    {t('nasa.subtitle')}
+                  </p>
+                  <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                    {t('nasa.title')}
+                  </h2>
+                  <p className="mt-3 text-base text-muted-foreground sm:text-lg">
+                    {t('nasa.description')}
+                  </p>
+                </header>
+                <div className="w-full max-w-7xl rounded-2xl border border-border">
+                  <iframe
+                    src={nasaVideoLink}
+                    width="800"
+                    height="500"
+                    style={{ border: 'none' }}
+                    className="w-full max-w-7xl rounded-2xl border border-red-500"
+                  ></iframe>
+                </div>
               </div>
-            </div>
-          ) : null}
+            ) : null}
 
-          <div className="flex justify-center mt-8">
-            <button
-              type="button"
-              onClick={handleReset}
-              className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 xl:px-8 py-3 xl:py-4 text-xs xl:text-sm 2xl:text-sm font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
-            >
-              Run another analysis
-            </button>
+            <div className="flex justify-center mt-8">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 xl:px-8 py-3 xl:py-4 text-xs xl:text-sm 2xl:text-sm font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
+              >
+                {t('form.button.reset')}
+              </button>
+            </div>
           </div>
-        </div>
         )}
       </div>
     </section>

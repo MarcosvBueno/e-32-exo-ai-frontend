@@ -8,67 +8,75 @@ import { AnimatePresence } from 'framer-motion';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { LoadingScreen } from './components/loading-page';
-
+import { useLanguage } from '@/lib/i18n/language-context';
 
 import { userFormSchema } from './schemas/user-form-schema';
-import { DetectionResult, ExoplanetPredictionComparisonResponse, ExoplanetPredictionResponse, PlanetMetric } from '@/types/exoplanet';
+import {
+  DetectionResult,
+  ExoplanetPredictionComparisonResponse,
+  ExoplanetPredictionResponse,
+  PlanetMetric,
+} from '@/types/exoplanet';
 import { PlanetDisplay } from '../planet-display';
 
 type ExoplanetFormValues = z.infer<typeof userFormSchema>;
 
 const defaultValues: ExoplanetFormValues = {
-  orbital_period_days: 289.9,
-  transit_depth_ppm: 492,
+  orbital_period_days: 41.74938613,
+  transit_depth_ppm: 486.0,
   planet_radius_re: 2.4,
   planet_mass_me: 36.0,
-  stellar_teff_k: 5518,
-  stellar_radius_rsun: 0.98,
-  stellar_mass_msun: 0.97,
+  stellar_teff_k: 5506.0,
+  stellar_radius_rsun: 0.914,
+  stellar_mass_msun: 0.904,
 };
 
-const fieldConfigs: Array<{
+function getFieldConfigs(t: (key: string) => string): Array<{
   name: keyof ExoplanetFormValues;
   label: string;
   placeholder: string;
-}> = [
-  {
-    name: 'orbital_period_days',
-    label: 'Orbital period (days)',
-    placeholder: '365',
-  },
-  {
-    name: 'transit_depth_ppm',
-    label: 'Transit depth (ppm)',
-    placeholder: '1500',
-  },
-  {
-    name: 'planet_radius_re',
-    label: 'Planet radius (R⊕)',
-    placeholder: '1.05',
-  },
-  {
-    name: 'planet_mass_me',
-    label: 'Planet mass (M⊕)',
-    placeholder: '1.00',
-  },
-  {
-    name: 'stellar_teff_k',
-    label: 'Stellar temperature (K)',
-    placeholder: '5778',
-  },
-  {
-    name: 'stellar_radius_rsun',
-    label: 'Stellar radius (R☉)',
-    placeholder: '1.0',
-  },
-  {
-    name: 'stellar_mass_msun',
-    label: 'Stellar mass (M☉)',
-    placeholder: '1.0',
-  },
-];
+}> {
+  return [
+    {
+      name: 'orbital_period_days',
+      label: t('form.field.orbital_period'),
+      placeholder: '365',
+    },
+    {
+      name: 'transit_depth_ppm',
+      label: t('form.field.transit_depth_ppm'),
+      placeholder: '1500',
+    },
+    {
+      name: 'planet_radius_re',
+      label: t('form.field.planet_radius'),
+      placeholder: '1.05',
+    },
+    {
+      name: 'planet_mass_me',
+      label: t('form.field.planet_mass'),
+      placeholder: '1.00',
+    },
+    {
+      name: 'stellar_teff_k',
+      label: t('form.field.stellar_temperature'),
+      placeholder: '5778',
+    },
+    {
+      name: 'stellar_radius_rsun',
+      label: t('form.field.stellar_radius'),
+      placeholder: '1.0',
+    },
+    {
+      name: 'stellar_mass_msun',
+      label: t('form.field.stellar_mass'),
+      placeholder: '1.0',
+    },
+  ];
+}
 
 export function ExoplanetForm() {
+  const { t } = useLanguage();
   const [prediction, setPrediction] =
     useState<ExoplanetPredictionResponse | null>(null);
   const [detection, setDetection] = useState<DetectionResult | null>(null);
@@ -102,31 +110,31 @@ export function ExoplanetForm() {
     const planet = detection.prediction.planet;
 
     return [
-      { title: 'Classification', value: detection.label },
+      { title: t('metrics.classification'), value: detection.label },
       {
-        title: 'Radius (R⊕)',
+        title: t('metrics.radius'),
         value: planet.radius_re !== null ? planet.radius_re.toFixed(2) : '--',
       },
       {
-        title: 'Mass (M⊕)',
+        title: t('metrics.mass'),
         value: planet.mass_me !== null ? planet.mass_me.toFixed(2) : '--',
       },
       {
-        title: 'Equilibrium temp.',
+        title: t('metrics.equilibrium_temp'),
         value:
           planet.equilibrium_temp_k !== null
             ? `${planet.equilibrium_temp_k.toFixed(0)} K`
             : '--',
       },
       {
-        title: 'Insolation',
+        title: t('metrics.insolation'),
         value:
           planet.insolation_earth !== null
             ? planet.insolation_earth.toFixed(2)
             : '--',
       },
     ];
-  }, [detection]);
+  }, [detection, t]);
 
   function handleReset() {
     reset();
@@ -138,7 +146,8 @@ export function ExoplanetForm() {
 
   const formatLinkToNasaVideo = (planetName: string) => {
     const formattedPlanetName = planetName.replace(' ', '_');
-    return `https://eyes.nasa.gov/apps/exo/#/planet/Kepler-209_c  `;
+    console.log(formattedPlanetName);
+    return `https://eyes.nasa.gov/apps/exo/#/planet/${formattedPlanetName}`;
   };
 
   async function onSubmit(values: ExoplanetFormValues) {
@@ -216,15 +225,13 @@ export function ExoplanetForm() {
             <div className="flex w-full flex-col items-center  gap-6 lg:max-w-xl px-4">
               <header className="space-y-3">
                 <p className="text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300/80">
-                  E-32 detector
+                  {t('form.user.subtitle')}
                 </p>
                 <h2 className="text-2xl xl:text-3xl 2xl:text-4xl font-semibold tracking-tight">
-                  Submit transit parameters to reveal the detected planet
+                  {t('form.user.title')}
                 </h2>
                 <p className="text-xs xl:text-sm 2xl:text-base text-muted-foreground">
-                  Every field is sent directly to the official API. Default
-                  values simulate an Earth-like candidate so you can explore
-                  quickly.
+                  {t('form.user.description')}
                 </p>
               </header>
 
@@ -232,7 +239,7 @@ export function ExoplanetForm() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8 shadow-2xl backdrop-blur"
               >
-                {fieldConfigs.map(field => {
+                {getFieldConfigs(t).map(field => {
                   const fieldError = errors[field.name];
 
                   return (
@@ -276,7 +283,9 @@ export function ExoplanetForm() {
                       disabled={isSubmitting}
                       className="inline-flex items-center justify-center rounded-full border border-cyan-400/60 px-4 xl:px-6 py-2 xl:py-3 text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.32em] text-cyan-100 transition hover:border-cyan-200 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      {isSubmitting ? 'Sending…' : 'Send to API'}
+                      {isSubmitting
+                        ? t('form.button.submitting')
+                        : t('form.button.submit')}
                     </button>
 
                     <button
@@ -284,7 +293,7 @@ export function ExoplanetForm() {
                       onClick={handleReset}
                       className="text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground transition hover:text-white"
                     >
-                      Clear inputs
+                      {t('form.button.clear')}
                     </button>
                   </div>
                 </div>
@@ -310,14 +319,13 @@ export function ExoplanetForm() {
             <div className="w-full flex justify-center p-4 flex-col gap-4">
               <header className="text-center">
                 <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
-                  Exoplanet visualization
+                  {t('nasa.subtitle')}
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                  Explore the planet in detail
+                  {t('nasa.title')}
                 </h2>
                 <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                  Rotate, zoom, and compare the detected world using NASA Eyes
-                  on Exoplanets.
+                  {t('nasa.description')}
                 </p>
               </header>
               <div className="w-full max-w-7xl rounded-2xl border border-border">
@@ -338,7 +346,7 @@ export function ExoplanetForm() {
               onClick={handleReset}
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-4 xl:px-6 py-2 xl:py-3 text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
             >
-              Run another analysis
+              {t('form.button.reset')}
             </button>
           ) : null}
         </div>
