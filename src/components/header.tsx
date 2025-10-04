@@ -48,12 +48,11 @@ const navItemVariants: Variants = {
 };
 
 function Header({ links, className, ...props }: HeaderProps) {
-  const navLinks =
-    links ?? [
-      { href: "#home", label: "Home" },
-      { href: "#insights", label: "Mission Insights" },
-      { href: "#crew", label: "Detection Form" },
-    ];
+  const navLinks = links ?? [
+    { href: '#home', label: 'Home' },
+    { href: '#insights', label: 'Exoplanet Insights' },
+    { href: '#crew', label: 'Detection Form' },
+  ];
 
   return (
     <motion.header
