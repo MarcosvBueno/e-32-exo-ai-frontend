@@ -3,10 +3,11 @@
 import * as React from "react";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useLanguage } from '@/lib/i18n/language-context';
 
 type MotionDivProps = React.ComponentPropsWithoutRef<typeof motion.div>;
 
-interface HeroSectionTextProps extends Omit<MotionDivProps, "children"> {
+interface HeroSectionTextProps extends Omit<MotionDivProps, 'children'> {
   title: string;
   description: string;
 }
@@ -68,27 +69,28 @@ export function HeroSectionText({
   transition,
   ...motionProps
 }: HeroSectionTextProps) {
-  const isLeftAligned = className?.includes("text-left") ?? false;
-  const isRightAligned = className?.includes("text-right") ?? false;
+  const { t } = useLanguage();
+  const isLeftAligned = className?.includes('text-left') ?? false;
+  const isRightAligned = className?.includes('text-right') ?? false;
 
   const alignmentClass = isLeftAligned
-    ? "items-start text-left"
+    ? 'items-start text-left'
     : isRightAligned
-    ? "items-end text-right"
-    : "items-center text-center";
+    ? 'items-end text-right'
+    : 'items-center text-center';
 
   const paragraphAlignment = isLeftAligned
-    ? "text-left"
+    ? 'text-left'
     : isRightAligned
-    ? "text-right"
-    : "text-center";
+    ? 'text-right'
+    : 'text-center';
 
   const chipsJustifyClass =
-    paragraphAlignment === "text-left"
-      ? "justify-start"
-      : paragraphAlignment === "text-right"
-      ? "justify-end"
-      : "justify-center";
+    paragraphAlignment === 'text-left'
+      ? 'justify-start'
+      : paragraphAlignment === 'text-right'
+      ? 'justify-end'
+      : 'justify-center';
 
   return (
     <motion.div
@@ -154,13 +156,13 @@ export function HeroSectionText({
         )}
       >
         <span className="rounded-full border border-white/20 bg_WHITE/5 px-5 py-2 backdrop-blur-sm">
-          continuous mission
+          {t('hero.chip.mission')}
         </span>
         <span className="rounded-full border border-white/15 bg-white/5 px-5 py-2 backdrop-blur-sm">
-          real-time telemetry
+          {t('hero.chip.telemetry')}
         </span>
         <span className="rounded-full border border-white/10 bg_WHITE/5 px-5 py-2 backdrop-blur-sm">
-          global collaboration
+          {t('hero.chip.collaboration')}
         </span>
       </motion.div>
     </motion.div>

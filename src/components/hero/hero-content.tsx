@@ -3,10 +3,12 @@
 import { Suspense } from "react";
 import { useScrollSpaceShuttle } from "./scroll-space-shuttle";
 import { HeroSectionText } from "./hero-text";
+import { useLanguage } from '@/lib/i18n/language-context';
 
 export function HeroContent() {
   const { isMidpoint, hasPassedMidpoint } = useScrollSpaceShuttle();
   const shouldShowFinalMessage = isMidpoint || hasPassedMidpoint;
+  const { t } = useLanguage();
 
   return (
     <div className="max-w-4xl mx-auto px-6 text-center">
@@ -21,13 +23,13 @@ export function HeroContent() {
         <HeroSectionText
           title={
             shouldShowFinalMessage
-              ? 'Charting Detection Probabilities'
-              : 'Decoding Exoplanet Signatures'
+              ? t('hero.title.midpoint')
+              : t('hero.title.initial')
           }
           description={
             shouldShowFinalMessage
-              ? 'Our upcoming analysis form will translate your mission inputs into precise exoplanet likelihood percentages for every candidate.'
-              : 'Surface the hidden patterns inside stellar light curves and forecast how likely each dataset reveals a new world.'
+              ? t('hero.description.midpoint')
+              : t('hero.description.initial')
           }
           className="text-center"
         />
