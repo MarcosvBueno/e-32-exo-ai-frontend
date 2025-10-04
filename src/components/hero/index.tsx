@@ -3,7 +3,7 @@ import { ScrollSpaceShuttle } from './scroll-space-shuttle';
 
 export function Hero() {
   return (
-    <div className="w-full bg-black text-foreground h-full ">
+    <div className="w-full bg-black text-foreground h-full " id="home">
       <ScrollSpaceShuttle
         imageUrl="/space-shuttle.png"
         imageClassName="w-auto h-auto max-w-3xl"
