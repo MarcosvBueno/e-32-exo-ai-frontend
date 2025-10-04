@@ -41,7 +41,7 @@ export function DetectionResultCard({
       transition={{
         duration: ANIMATION_CONFIG.duration.medium,
         ease: ANIMATION_CONFIG.easing,
-        delay: 1.8, // Aparece após as animações dos planetas
+        delay: 1.8, // Appears after planet animations
       }}
       className={containerClassName}
     >
@@ -92,7 +92,7 @@ export function DetectionResultCard({
                 {confidencePercent}
               </div>
               <div className="text-xs text-cyan-300/80 uppercase tracking-wider">
-                Confiança do Ensemble
+                Ensemble confidence
               </div>
             </motion.div>
           </motion.div>
@@ -117,9 +117,9 @@ export function DetectionResultCard({
             </div>
 
             <div className="space-y-1.5 text-xs text-muted-foreground">
-              <p>Dados derivados:</p>
+              <p>Derived metrics:</p>
               <div className="flex items-center justify-between">
-                <span>Temp. Equilíbrio</span>
+                <span>Equilibrium temp.</span>
                 <span>
                   {detection.prediction.planet.equilibrium_temp_k !== null
                     ? `${detection.prediction.planet.equilibrium_temp_k.toFixed(
@@ -129,7 +129,7 @@ export function DetectionResultCard({
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Insolação (Earth)</span>
+                <span>Insolation (Earth)</span>
                 <span>
                   {detection.prediction.planet.insolation_earth !== null
                     ? detection.prediction.planet.insolation_earth.toFixed(2)
@@ -157,11 +157,11 @@ export function DetectionResultCard({
           >
             {detection.prediction.comparison_to_earth.radius_ratio_earth !==
             null ? (
-              <span>{`Raio comparado à Terra: ${detection.prediction.comparison_to_earth.radius_ratio_earth.toFixed(
+              <span>{`Radius compared to Earth: ${detection.prediction.comparison_to_earth.radius_ratio_earth.toFixed(
                 2
               )} R⊕`}</span>
             ) : (
-              <span>Excelente candidato! Recomenda-se análise adicional.</span>
+              <span>Promising candidate — schedule a deeper follow-up.</span>
             )}
           </motion.div>
 

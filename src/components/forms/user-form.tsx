@@ -12,6 +12,7 @@ import { LoadingScreen } from './components/loading-page';
 
 import { userFormSchema } from './schemas/user-form-schema';
 import { DetectionResult, ExoplanetPredictionComparisonResponse, ExoplanetPredictionResponse, PlanetMetric } from '@/types/exoplanet';
+import { PlanetDisplay } from '../planet-display';
 
 type ExoplanetFormValues = z.infer<typeof userFormSchema>;
 
@@ -68,9 +69,8 @@ const fieldConfigs: Array<{
 ];
 
 export function ExoplanetForm() {
-  const [prediction, setPrediction] = useState<ExoplanetPredictionResponse | null>(
-    null
-  );
+  const [prediction, setPrediction] =
+    useState<ExoplanetPredictionResponse | null>(null);
   const [detection, setDetection] = useState<DetectionResult | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [nasaVideoLink, setNasaVideoLink] = useState<string | null>(null);
@@ -143,7 +143,7 @@ export function ExoplanetForm() {
 
   async function onSubmit(values: ExoplanetFormValues) {
     setApiError(null);
-      setPrediction(null);
+    setPrediction(null);
     setDetection(null);
     setNasaVideoLink(null);
 
@@ -298,6 +298,14 @@ export function ExoplanetForm() {
             !hasDetectedExoplanet && 'hidden lg:flex'
           }`}
         >
+          <PlanetDisplay
+            hasDetectedExoplanet={hasDetectedExoplanet}
+            detection={detection}
+            exoplanetMetrics={exoplanetMetrics}
+            stellarTemperature={stellarTemperature}
+            transitDepth={transitDepth}
+            orbitalPeriod={orbitalPeriod}
+          />
           {nasaVideoLink ? (
             <div className="w-full flex justify-center p-4 flex-col gap-4">
               <header className="text-center">
