@@ -9,6 +9,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { LoadingScreen } from './components/loading-page';
 import { useLanguage } from '@/lib/i18n/language-context';
+import { NotPlanetCandidateCard } from '../not-planet-candidate-card';
 
 import { userFormSchema } from './schemas/user-form-schema';
 import {
@@ -25,7 +26,7 @@ const defaultValues: ExoplanetFormValues = {
   orbital_period_days: 41.74938613,
   transit_depth_ppm: 486.0,
   planet_radius_re: 2.4,
-  planet_mass_me: 36.0,
+  planet_mass_me: 0,
   stellar_teff_k: 5506.0,
   stellar_radius_rsun: 0.914,
   stellar_mass_msun: 0.904,
@@ -256,7 +257,7 @@ export function ExoplanetForm() {
                       <Input
                         id={field.name as string}
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder={field.placeholder}
                         className="rounded-2xl border border-white/20 bg-white/5 px-3 xl:px-4 py-2 xl:py-3 text-xs xl:text-sm 2xl:text-sm text-foreground transition focus:border-cyan-300 focus:bg-white/10"
                         {...register(field.name, { valueAsNumber: true })}
@@ -304,51 +305,72 @@ export function ExoplanetForm() {
 
         <div
           className={`flex w-full flex-col items-center gap-6 justify-center ${
-            !hasDetectedExoplanet && 'hidden lg:flex'
+            !hasDetectedExoplanet && !detection && 'hidden lg:flex'
           }`}
         >
-          <PlanetDisplay
-            hasDetectedExoplanet={hasDetectedExoplanet}
-            detection={detection}
-            exoplanetMetrics={exoplanetMetrics}
-            stellarTemperature={stellarTemperature}
-            transitDepth={transitDepth}
-            orbitalPeriod={orbitalPeriod}
+          {/* NotPlanetCandidateCard Modal */}
+          <NotPlanetCandidateCard
+            probabilities={
+              detection?.probabilities || {
+                rf: null,
+                hgb: null,
+                ensemble: null,
+              }
+            }
+            labels={
+              detection?.labels || { rf: null, hgb: null, ensemble: null }
+            }
+            onReset={handleReset}
+            isOpen={!!detection && !hasDetectedExoplanet}
           />
-          {nasaVideoLink ? (
-            <div className="w-full flex justify-center p-4 flex-col gap-4">
-              <header className="text-center">
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
-                  {t('nasa.subtitle')}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                  {t('nasa.title')}
-                </h2>
-                <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                  {t('nasa.description')}
-                </p>
-              </header>
-              <div className="w-full max-w-7xl rounded-2xl border border-border">
-                <iframe
-                  src={nasaVideoLink}
-                  width="800"
-                  height="500"
-                  style={{ border: 'none' }}
-                  className="w-full max-w-7xl rounded-2xl border border-red-500"
-                ></iframe>
-              </div>
-            </div>
-          ) : null}
 
-          {hasDetectedExoplanet ? (
-            <button
-              type="button"
-              onClick={handleReset}
-              className="inline-flex items-center justify-center rounded-full border border-white/20 px-4 xl:px-6 py-2 xl:py-3 text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
-            >
-              {t('form.button.reset')}
-            </button>
-          ) : null}
+          {/* Show PlanetDisplay if it's an exoplanet or no detection yet */}
+          {(!detection || hasDetectedExoplanet) && (
+            <>
+              <PlanetDisplay
+                hasDetectedExoplanet={hasDetectedExoplanet}
+                detection={detection}
+                exoplanetMetrics={exoplanetMetrics}
+                stellarTemperature={stellarTemperature}
+                transitDepth={transitDepth}
+                orbitalPeriod={orbitalPeriod}
+              />
+              {nasaVideoLink ? (
+                <div className="w-full flex justify-center p-4 flex-col gap-4">
+                  <header className="text-center">
+                    <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
+                      {t('nasa.subtitle')}
+                    </p>
+                    <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                      {t('nasa.title')}
+                    </h2>
+                    <p className="mt-3 text-base text-muted-foreground sm:text-lg">
+                      {t('nasa.description')}
+                    </p>
+                  </header>
+                  <div className="w-full max-w-7xl rounded-2xl border border-border">
+                    <iframe
+                      src={nasaVideoLink}
+                      width="800"
+                      height="500"
+                      style={{ border: 'none' }}
+                      className="w-full max-w-7xl rounded-2xl border border-red-500"
+                    ></iframe>
+                  </div>
+                </div>
+              ) : null}
+
+              {hasDetectedExoplanet ? (
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-4 xl:px-6 py-2 xl:py-3 text-[10px] xl:text-xs 2xl:text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
+                >
+                  {t('form.button.reset')}
+                </button>
+              ) : null}
+            </>
+          )}
         </div>
       </div>
     </section>

@@ -10,6 +10,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { LoadingScreen } from './components/loading-page';
 import { PlanetDisplay } from '../planet-display';
+import { NotPlanetCandidateCard } from '../not-planet-candidate-card';
 import type {
   DetectionResult,
   PlanetMetric,
@@ -288,7 +289,7 @@ export function ScientistForm() {
                       <Input
                         id={field.name as string}
                         type="number"
-                        step="0.0001"
+                        step="any"
                         placeholder={field.placeholder}
                         className="rounded-2xl border border-white/20 bg-white/5 px-3 xl:px-3 py-1.5 xl:py-2 text-xs xl:text-xs 2xl:text-xs text-foreground transition focus:border-cyan-300 focus:bg-white/10"
                         {...register(field.name, { valueAsNumber: true })}
@@ -334,52 +335,64 @@ export function ScientistForm() {
           </>
         )}
 
+        {/* NotPlanetCandidateCard Modal */}
+        <NotPlanetCandidateCard
+          probabilities={
+            detection?.probabilities || { rf: null, hgb: null, ensemble: null }
+          }
+          labels={detection?.labels || { rf: null, hgb: null, ensemble: null }}
+          onReset={handleReset}
+          isOpen={!!detection && !hasDetectedExoplanet}
+        />
+
         {/* Results Section */}
-        {hasDetectedExoplanet && detection && (
+        {detection && hasDetectedExoplanet && (
           <div className="space-y-8">
-            <PlanetDisplay
-              hasDetectedExoplanet={hasDetectedExoplanet}
-              detection={detection}
-              exoplanetMetrics={exoplanetMetrics}
-              stellarTemperature={stellarTemperature}
-              transitDepth={transitDepth}
-              orbitalPeriod={orbitalPeriod}
-            />
+            <>
+              <PlanetDisplay
+                hasDetectedExoplanet={hasDetectedExoplanet}
+                detection={detection}
+                exoplanetMetrics={exoplanetMetrics}
+                stellarTemperature={stellarTemperature}
+                transitDepth={transitDepth}
+                orbitalPeriod={orbitalPeriod}
+              />
 
-            {nasaVideoLink ? (
-              <div className="w-full flex justify-center p-4 flex-col gap-4">
-                <header className="text-center">
-                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
-                    {t('nasa.subtitle')}
-                  </p>
-                  <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                    {t('nasa.title')}
-                  </h2>
-                  <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                    {t('nasa.description')}
-                  </p>
-                </header>
-                <div className="w-full max-w-7xl rounded-2xl border border-border">
-                  <iframe
-                    src={nasaVideoLink}
-                    width="800"
-                    height="500"
-                    style={{ border: 'none' }}
-                    className="w-full max-w-7xl rounded-2xl border border-red-500"
-                  ></iframe>
+              {nasaVideoLink ? (
+                <div className="w-full flex justify-center p-4 flex-col gap-4">
+                  <header className="text-center">
+                    <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
+                      {t('nasa.subtitle')}
+                    </p>
+                    <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                      {t('nasa.title')}
+                    </h2>
+                    <p className="mt-3 text-base text-muted-foreground sm:text-lg">
+                      {t('nasa.description')}
+                    </p>
+                  </header>
+                  <div className="w-full max-w-7xl rounded-2xl border border-border">
+                    <iframe
+                      src={nasaVideoLink}
+                      width="800"
+                      height="500"
+                      style={{ border: 'none' }}
+                      className="w-full max-w-7xl rounded-2xl border border-red-500"
+                    ></iframe>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              ) : null}
 
-            <div className="flex justify-center mt-8">
-              <button
-                type="button"
-                onClick={handleReset}
-                className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 xl:px-8 py-3 xl:py-4 text-xs xl:text-sm 2xl:text-sm font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
-              >
-                {t('form.button.reset')}
-              </button>
-            </div>
+              <div className="flex justify-center mt-8">
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 xl:px-8 py-3 xl:py-4 text-xs xl:text-sm 2xl:text-sm font-semibold uppercase tracking-[0.32em] text-white transition hover:border-cyan-100 hover:text-cyan-100"
+                >
+                  {t('form.button.reset')}
+                </button>
+              </div>
+            </>
           </div>
         )}
       </div>

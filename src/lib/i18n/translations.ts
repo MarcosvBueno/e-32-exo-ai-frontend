@@ -116,6 +116,13 @@ export const translations = {
     'nasa.title': 'Explore the planet in detail',
     'nasa.description':
       'Rotate, zoom, and compare the detected world using NASA Eyes on Exoplanets.',
+
+    // Detection - Not Planet Candidate
+    'detection.not_candidate.subtitle': 'Low Confidence Detection',
+    'detection.not_candidate.title': 'Not a Planet Candidate',
+    'detection.not_candidate.description':
+      'Our ML models indicate this transit signal is unlikely caused by an exoplanet.',
+    'detection.not_candidate.confidence': 'Average Confidence',
   },
   pt: {
     // Header
@@ -234,5 +241,12 @@ export const translations = {
     'nasa.title': 'Explore o planeta em detalhes',
     'nasa.description':
       'Rotacione, amplie e compare o mundo detectado usando o NASA Eyes on Exoplanets.',
+
+    // Detection - Not Planet Candidate
+    'detection.not_candidate.subtitle': 'Detecção de Baixa Confiança',
+    'detection.not_candidate.title': 'Não é um Candidato a Planeta',
+    'detection.not_candidate.description':
+      'Nossos modelos de ML indicam que este sinal de trânsito provavelmente não é causado por um exoplaneta.',
+    'detection.not_candidate.confidence': 'Confiança Média',
   },
 };
