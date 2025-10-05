@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence } from 'framer-motion';
+import axios, { type AxiosResponse } from 'axios';
 
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
@@ -188,59 +189,41 @@ export function ScientistForm() {
     return `https://eyes.nasa.gov/apps/exo/#/planet/${formattedPlanetName}`;
   };
 
-  async function onSubmit(values: ScientistFormValues) {
+  async function onSubmit(values: ScientistFormValues): Promise<void> {
     setApiError(null);
     setDetection(null);
     setNasaVideoLink(null);
 
     try {
-      const predictResponse = await fetch(
-        'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/predict/scientist',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      // Chamadas com Axios e tipagem AxiosResponse
+      const predictResponse: AxiosResponse<ExoplanetPredictionResponse> =
+        await axios.post(
+          'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/predict/scientist',
+          values
+        );
 
-      const compareResponse = await fetch(
-        'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/compare/scientist',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const compareResponse: AxiosResponse<ExoplanetPredictionComparisonResponse> =
+        await axios.post(
+          'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/compare/scientist',
+          values
+        );
 
-      if (!compareResponse.ok) {
-        const message = await compareResponse.text();
-        throw new Error(message || 'Unable to retrieve comparison results.');
-      }
-
-      const compareData =
-        (await compareResponse.json()) as ExoplanetPredictionComparisonResponse;
+      // Acessar dados tipados através de .data
+      const compareData = compareResponse.data;
       setNasaVideoLink(
         formatLinkToNasaVideo(compareData.similar_exoplanets[0].planet_name)
       );
 
-      if (!predictResponse.ok) {
-        const message = await predictResponse.text();
-        throw new Error(message || 'Unable to retrieve the prediction.');
-      }
-
-      const data =
-        (await predictResponse.json()) as ExoplanetPredictionResponse;
+      const data = predictResponse.data;
       setDetection(mapPredictionToDetection(data));
     } catch (error) {
-      setApiError(
-        error instanceof Error
-          ? error.message
-          : 'An unknown error occurred while contacting the API.'
-      );
+      if (axios.isAxiosError(error)) {
+        // Tratamento específico de erros do Axios
+        const message = error.response?.data?.message || error.message;
+        setApiError(message);
+      } else {
+        setApiError('An unknown error occurred while contacting the API.');
+      }
     }
   }
 
