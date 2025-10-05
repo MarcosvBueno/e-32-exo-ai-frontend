@@ -1,10 +1,16 @@
-'use client';
-
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/header';
 import { LanguageProvider } from '@/lib/i18n/language-context';
 import { translations } from '@/lib/i18n/translations';
+
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'E-32 Exo AI ',
+  description:
+    'AI-powered exoplanet detection and analysis platform using machine learning to identify and characterize exoplanets.',
+};
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
