@@ -7,6 +7,7 @@ import type { HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/lib/i18n/language-context';
 import { LanguageToggle } from './language-toggle';
+import { RiveLogo } from './rive-logo';
 
 interface HeaderProps extends HTMLMotionProps<'header'> {
   links?: Array<{ href: string; label: string }>;
@@ -68,15 +69,7 @@ function Header({ links, className, ...props }: HeaderProps) {
       {...props}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-evenly px-5 py-4">
-        <motion.div
-          initial={{ opacity: 0, x: -12 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.35em] text-white"
-        >
-          <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.85)]" />
-          E-32
-        </motion.div>
+        <RiveLogo className="flex items-center" />
 
         <motion.nav
           variants={navVariants}
