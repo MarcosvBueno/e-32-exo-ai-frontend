@@ -206,15 +206,15 @@ export function ScientistForm() {
     try {
       // 1. Primeiro: Fazer a predição
       const predictResponse: AxiosResponse<ExoplanetPredictionResponse> =
-        await instance.post('/predict/scientist', values);
+        await instance.post('predict/scientist', values);
 
       const compareResponse: AxiosResponse<ExoplanetPredictionComparisonResponse> =
-        await instance.post('/compare/scientist', values);
+        await instance.post('compare/scientist', values);
 
       if (predictResponse.data.prediction_id) {
         const dashboardResponse: AxiosResponse<DashboardResponse> =
           await instance.get(
-            `/dashboard/scientific/${predictResponse.data.prediction_id}`
+            `dashboard/scientific/${predictResponse.data.prediction_id}`
           );
 
         const data = predictResponse.data;

@@ -149,7 +149,7 @@ export function ExoplanetForm() {
 
   const formatLinkToNasaVideo = (planetName: string) => {
     const formattedPlanetName = planetName.replace(/ /g, '_');
-    console.log(formattedPlanetName);
+
     return `https://eyes.nasa.gov/apps/exo/#/planet/${formattedPlanetName}`;
   };
 
@@ -161,10 +161,10 @@ export function ExoplanetForm() {
 
     try {
       const predictResponse: AxiosResponse<ExoplanetPredictionResponse> =
-        await instance.post('/predict/user', values);
+        await instance.post('predict/user', values);
 
       const compareResponse: AxiosResponse<ExoplanetPredictionComparisonResponse> =
-        await instance.post('/compare/user', values);
+        await instance.post('compare/user', values);
 
       const compareData = compareResponse.data;
       setNasaVideoLink(

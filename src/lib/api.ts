@@ -1,6 +1,11 @@
 import axios from 'axios';
 
+
+const baseURL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL;
 export const instance = axios.create({
-  baseURL:
-    'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1',
+  baseURL,
+  timeout: 30000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
