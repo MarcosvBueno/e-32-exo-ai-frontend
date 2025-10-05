@@ -68,7 +68,7 @@ function Header({ links, className, ...props }: HeaderProps) {
       )}
       {...props}
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-evenly px-5 py-4">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4">
         <RiveLogo className="flex items-center" />
 
         <motion.nav
@@ -98,7 +98,7 @@ function Header({ links, className, ...props }: HeaderProps) {
           <LanguageToggle />
           <Link
             href="#form"
-            className="rounded-full border border-cyan-400/60 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100 transition-all hover:border-cyan-200 hover:text-white"
+            className="hidden md:block rounded-full border border-cyan-400/60 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100 transition-all hover:border-cyan-200 hover:text-white"
           >
             {t('header.cta')}
           </Link>
