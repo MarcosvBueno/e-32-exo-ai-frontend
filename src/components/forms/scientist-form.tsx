@@ -377,7 +377,7 @@ export function ScientistForm() {
               ) : null}
 
               {dashboardData ? (
-                <div className="w-full p-4">
+                <div className="w-full p-4 py-20">
                   <DashboardCards dashboardData={dashboardData} />
                 </div>
               ) : null}
