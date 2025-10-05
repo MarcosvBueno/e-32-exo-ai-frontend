@@ -23,13 +23,13 @@ import { PlanetDisplay } from '../planet-display';
 type ExoplanetFormValues = z.infer<typeof userFormSchema>;
 
 const defaultValues: ExoplanetFormValues = {
-  orbital_period_days: 41.74938613,
-  transit_depth_ppm: 486.0,
-  planet_radius_re: 2.4,
-  planet_mass_me: 0,
-  stellar_teff_k: 5506.0,
-  stellar_radius_rsun: 0.914,
-  stellar_mass_msun: 0.904,
+  orbital_period_days: 41.69,
+  transit_depth_ppm: 0.1,
+  planet_radius_re: 2.58,
+  planet_mass_me: 22.25,
+  stellar_teff_k: 5766.0,
+  stellar_radius_rsun: 1.0,
+  stellar_mass_msun: 1.0,
 };
 
 function getFieldConfigs(t: (key: string) => string): Array<{
@@ -146,7 +146,7 @@ export function ExoplanetForm() {
   }
 
   const formatLinkToNasaVideo = (planetName: string) => {
-    const formattedPlanetName = planetName.replace(' ', '_');
+    const formattedPlanetName = planetName.replace(/ /g, '_');
     console.log(formattedPlanetName);
     return `https://eyes.nasa.gov/apps/exo/#/planet/${formattedPlanetName}`;
   };
@@ -336,7 +336,7 @@ export function ExoplanetForm() {
                 orbitalPeriod={orbitalPeriod}
               />
               {nasaVideoLink ? (
-                <div className="w-full flex justify-center p-4 flex-col gap-4">
+                <div className="w-full flex justify-center p-4 flex-col gap-4 items-center">
                   <header className="text-center">
                     <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
                       {t('nasa.subtitle')}
