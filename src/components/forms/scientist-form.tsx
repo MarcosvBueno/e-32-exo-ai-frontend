@@ -12,6 +12,7 @@ import { Input } from '../ui/input';
 import { LoadingScreen } from './components/loading-page';
 import { PlanetDisplay } from '../planet-display';
 import { NotPlanetCandidateCard } from '../not-planet-candidate-card';
+import { PopoverInfoForm } from '../popover-info-form';
 import type {
   DetectionResult,
   PlanetMetric,
@@ -273,12 +274,20 @@ export function ScientistForm() {
                       key={field.name as string}
                       className="flex flex-col gap-2"
                     >
-                      <Label
-                        htmlFor={field.name as string}
-                        className="text-[9px] xl:text-[10px] 2xl:text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan-200 min-h-[1.75rem] xl:min-h-[1.75rem] flex items-end"
-                      >
-                        {field.label}
-                      </Label>
+                      <div className="flex items-center gap-2 min-h-[1.75rem] xl:min-h-[1.75rem]">
+                        <Label
+                          htmlFor={field.name as string}
+                          className="text-[9px] xl:text-[10px] 2xl:text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan-200 flex items-end"
+                        >
+                          {field.label}
+                        </Label>
+                        <PopoverInfoForm
+                          title={field.label}
+                          description={t(
+                            `form.field.${field.name}.description`
+                          )}
+                        />
+                      </div>
                       <Input
                         id={field.name as string}
                         type="number"

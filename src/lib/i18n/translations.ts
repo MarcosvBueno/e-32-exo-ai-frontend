@@ -91,6 +91,38 @@ export const translations = {
     'form.field.period_mass_interaction': 'Period-mass interaction',
     'form.field.stellar_teff_bin': 'Stellar temperature bin (K)',
 
+    // Form field descriptions
+    'form.field.orbital_period_days.description':
+      'Time in days for the planet to complete one orbit around its host star. Earth takes 365 days.',
+    'form.field.transit_depth_ppm.description':
+      'Brightness decrease when the planet passes in front of its star, measured in parts per million (ppm).',
+    'form.field.transit_depth.description':
+      'The fractional decrease in stellar brightness during a planetary transit.',
+    'form.field.transit_duration.description':
+      'Total time in hours that the planet takes to cross the stellar disk during transit.',
+    'form.field.planet_radius_re.description':
+      'Planet size relative to Earth (R⊕). 1.0 means Earth-sized, >1.0 larger than Earth.',
+    'form.field.planet_mass_me.description':
+      'Planet mass relative to Earth (M⊕). 1.0 means Earth-mass, >1.0 more massive than Earth.',
+    'form.field.stellar_teff_k.description':
+      'Effective surface temperature of the host star in Kelvin. Our Sun is approximately 5778 K.',
+    'form.field.stellar_radius_rsun.description':
+      'Star size relative to our Sun (R☉). 1.0 means Sun-sized, >1.0 larger than the Sun.',
+    'form.field.stellar_mass_msun.description':
+      'Star mass relative to our Sun (M☉). 1.0 means Sun-mass, >1.0 more massive than the Sun.',
+    'form.field.radius_ratio.description':
+      'Ratio between planet radius and stellar radius (Rp/Rs). Helps determine transit depth.',
+    'form.field.semi_major_axis_au.description':
+      'Average distance between the planet and its star in Astronomical Units (AU). Earth is 1 AU from the Sun.',
+    'form.field.equilibrium_temp_recalc_k.description':
+      'Theoretical temperature of the planet assuming thermal equilibrium with stellar radiation.',
+    'form.field.log_orbital_period.description':
+      'Logarithm (base 10) of the orbital period. Used for statistical analysis and pattern detection.',
+    'form.field.period_mass_interaction.description':
+      'Calculated interaction term between orbital period and planet mass for advanced modeling.',
+    'form.field.stellar_teff_bin.description':
+      'Binned stellar temperature value used for categorical analysis in machine learning models.',
+
     // Form buttons
     'form.button.submit': 'Send to API',
     'form.button.submitting': 'Sending…',
@@ -252,6 +284,38 @@ export const translations = {
     'form.field.log_orbital_period': 'Log período orbital',
     'form.field.period_mass_interaction': 'Interação período-massa',
     'form.field.stellar_teff_bin': 'Bin de temperatura estelar (K)',
+
+    // Form field descriptions
+    'form.field.orbital_period_days.description':
+      'Tempo em dias para o planeta completar uma órbita ao redor de sua estrela. A Terra leva 365 dias.',
+    'form.field.transit_depth_ppm.description':
+      'Diminuição do brilho quando o planeta passa na frente de sua estrela, medido em partes por milhão (ppm).',
+    'form.field.transit_depth.description':
+      'A diminuição fracionária no brilho estelar durante um trânsito planetário.',
+    'form.field.transit_duration.description':
+      'Tempo total em horas que o planeta leva para cruzar o disco estelar durante o trânsito.',
+    'form.field.planet_radius_re.description':
+      'Tamanho do planeta em relação à Terra (R⊕). 1.0 significa tamanho da Terra, >1.0 maior que a Terra.',
+    'form.field.planet_mass_me.description':
+      'Massa do planeta em relação à Terra (M⊕). 1.0 significa massa da Terra, >1.0 mais massivo que a Terra.',
+    'form.field.stellar_teff_k.description':
+      'Temperatura efetiva da superfície da estrela hospedeira em Kelvin. Nosso Sol tem aproximadamente 5778 K.',
+    'form.field.stellar_radius_rsun.description':
+      'Tamanho da estrela em relação ao nosso Sol (R☉). 1.0 significa tamanho do Sol, >1.0 maior que o Sol.',
+    'form.field.stellar_mass_msun.description':
+      'Massa da estrela em relação ao nosso Sol (M☉). 1.0 significa massa do Sol, >1.0 mais massivo que o Sol.',
+    'form.field.radius_ratio.description':
+      'Razão entre o raio do planeta e o raio estelar (Rp/Rs). Ajuda a determinar a profundidade do trânsito.',
+    'form.field.semi_major_axis_au.description':
+      'Distância média entre o planeta e sua estrela em Unidades Astronômicas (UA). A Terra está a 1 UA do Sol.',
+    'form.field.equilibrium_temp_recalc_k.description':
+      'Temperatura teórica do planeta assumindo equilíbrio térmico com a radiação estelar.',
+    'form.field.log_orbital_period.description':
+      'Logaritmo (base 10) do período orbital. Usado para análise estatística e detecção de padrões.',
+    'form.field.period_mass_interaction.description':
+      'Termo de interação calculado entre período orbital e massa do planeta para modelagem avançada.',
+    'form.field.stellar_teff_bin.description':
+      'Valor de temperatura estelar agrupado usado para análise categórica em modelos de aprendizado de máquina.',
 
     // Form buttons
     'form.button.submit': 'Enviar para API',
