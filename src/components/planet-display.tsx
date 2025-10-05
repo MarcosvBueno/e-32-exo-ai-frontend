@@ -462,7 +462,7 @@ export function PlanetDisplay({
                     title="Orbital period"
                     value={`${Number.parseFloat(orbitalPeriod).toFixed(
                       1
-                    )} dias`}
+                    )} days`}
                     delay={1.4}
                   />
                 </motion.div>

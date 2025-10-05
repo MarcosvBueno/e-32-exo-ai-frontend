@@ -123,6 +123,43 @@ export const translations = {
     'detection.not_candidate.description':
       'Our ML models indicate this transit signal is unlikely caused by an exoplanet.',
     'detection.not_candidate.confidence': 'Average Confidence',
+
+    // Dashboard
+    'dashboard.header.subtitle': 'Scientific Analysis',
+    'dashboard.header.title': 'Model Metrics & Exoplanet Data',
+    'dashboard.header.description':
+      'Detailed analysis of AI model performance metrics and physical characteristics of the detected exoplanet',
+
+    // Dashboard Sections
+    'dashboard.sections.model_performance': 'AI Model Performance',
+    'dashboard.sections.exoplanet_characteristics': 'Exoplanet Characteristics',
+    'dashboard.sections.analysis_summary': 'Analysis Summary',
+
+    // Dashboard Metrics
+    'dashboard.metrics.roc_auc.description':
+      "Area under ROC curve - measures the model's ability to distinguish between classes",
+    'dashboard.metrics.pr_auc.description':
+      'Area under Precision-Recall curve - important for imbalanced datasets',
+    'dashboard.metrics.recall.title': 'Recall',
+    'dashboard.metrics.recall.description':
+      'Proportion of actual exoplanets that were correctly identified',
+    'dashboard.metrics.f1_score.description':
+      'Harmonic mean between precision and recall - balanced metric',
+    'dashboard.metrics.accuracy.title': 'Accuracy',
+    'dashboard.metrics.accuracy.description':
+      'Total proportion of correct model predictions',
+    'dashboard.metrics.precision.title': 'Precision',
+    'dashboard.metrics.precision.description':
+      'Proportion of positive predictions that were correct',
+
+    // Dashboard Planet Info
+    'dashboard.planet.radius': 'Radius (Re)',
+    'dashboard.planet.mass': 'Mass (Me)',
+    'dashboard.planet.stellar_temperature': 'Stellar Temperature',
+    'dashboard.planet.orbital_period': 'Orbital Period',
+    'dashboard.planet.equilibrium_temp': 'Equilibrium Temp.',
+    'dashboard.planet.ai_confidence': 'AI Confidence',
+    'dashboard.planet.days': 'days',
   },
   pt: {
     // Header
@@ -248,5 +285,43 @@ export const translations = {
     'detection.not_candidate.description':
       'Nossos modelos de ML indicam que este sinal de trânsito provavelmente não é causado por um exoplaneta.',
     'detection.not_candidate.confidence': 'Confiança Média',
+
+    // Dashboard
+    'dashboard.header.subtitle': 'Análise Científica',
+    'dashboard.header.title': 'Métricas do Modelo & Dados do Exoplaneta',
+    'dashboard.header.description':
+      'Análise detalhada das métricas de performance do modelo de IA e características físicas do exoplaneta detectado',
+
+    // Dashboard Sections
+    'dashboard.sections.model_performance': 'Performance do Modelo de IA',
+    'dashboard.sections.exoplanet_characteristics':
+      'Características do Exoplaneta',
+    'dashboard.sections.analysis_summary': 'Resumo da Análise',
+
+    // Dashboard Metrics
+    'dashboard.metrics.roc_auc.description':
+      'Área sob a curva ROC - mede a capacidade do modelo de distinguir entre classes',
+    'dashboard.metrics.pr_auc.description':
+      'Área sob a curva Precision-Recall - importante para datasets desbalanceados',
+    'dashboard.metrics.recall.title': 'Recall',
+    'dashboard.metrics.recall.description':
+      'Proporção de exoplanetas reais que foram corretamente identificados',
+    'dashboard.metrics.f1_score.description':
+      'Média harmônica entre precision e recall - métrica balanceada',
+    'dashboard.metrics.accuracy.title': 'Precisão',
+    'dashboard.metrics.accuracy.description':
+      'Proporção total de predições corretas do modelo',
+    'dashboard.metrics.precision.title': 'Precisão',
+    'dashboard.metrics.precision.description':
+      'Proporção de predições positivas que estavam corretas',
+
+    // Dashboard Planet Info
+    'dashboard.planet.radius': 'Raio (Re)',
+    'dashboard.planet.mass': 'Massa (Me)',
+    'dashboard.planet.stellar_temperature': 'Temperatura Estelar',
+    'dashboard.planet.orbital_period': 'Período Orbital',
+    'dashboard.planet.equilibrium_temp': 'Temp. Equilíbrio',
+    'dashboard.planet.ai_confidence': 'Confiança IA',
+    'dashboard.planet.days': 'dias',
   },
 };
