@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { cn } from "@/lib/utils"; // Assuming you have a `cn` utility
+import { cn } from '@/lib/utils';
 
   interface ScrollSpaceShuttleRenderProps {
   progress: MotionValue<number>;
