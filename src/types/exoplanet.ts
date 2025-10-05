@@ -116,3 +116,79 @@ export interface ExoplanetPredictionComparisonResponse {
   uniqueness_score: number;
   scientific_interest: string;
 }
+
+// Dashboard Response Types
+export interface FeatureImportance {
+  feature_name: string;
+  importance_value: number;
+  feature_category: string;
+  description: string;
+}
+
+export interface ModelExplanation {
+  model_name: string;
+  base_value: number;
+  prediction_probability: number;
+  feature_importances: FeatureImportance[];
+  explanation_summary: string;
+}
+
+export interface ExplainabilityData {
+  explanations: ModelExplanation[];
+  overall_summary: string;
+  confidence_score: number;
+  key_factors: string[];
+}
+
+export interface SimilarExoplanet {
+  planet_name: string;
+  similarity_score: number;
+  distance: number;
+  stellar_type: string;
+  planet_type: string;
+  orbital_period_days: number;
+  planet_radius_re: number;
+  equilibrium_temp_k: number;
+  habitability_score: number;
+  discovery_year: number;
+}
+
+export interface ComparisonData {
+  similar_exoplanets: SimilarExoplanet[];
+  comparison_summary: string;
+  uniqueness_score: number;
+  scientific_interest: string;
+}
+
+export interface ModelMetrics {
+  roc_auc: number;
+  pr_auc: number;
+  balanced_accuracy: number;
+  brier_score: number;
+  f1_score: number;
+  recall: number;
+  precision: number;
+  accuracy: number;
+  training_samples: number;
+  missions: string[];
+  features_used: number;
+  threshold: number;
+  last_updated: string;
+}
+
+export interface ChartData {
+  [key: string]: unknown;
+}
+
+export interface DashboardResponse {
+  prediction: ExoplanetPredictionResponse;
+  explainability: ExplainabilityData;
+  comparison: ComparisonData;
+  model_metrics: ModelMetrics;
+  charts: ChartData;
+  candidate_id: string;
+  processing_time: number;
+  data_quality_score: number;
+  scientific_interest_level: string;
+}
+

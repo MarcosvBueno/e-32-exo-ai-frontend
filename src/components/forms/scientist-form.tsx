@@ -17,9 +17,12 @@ import type {
   PlanetMetric,
   ExoplanetPredictionResponse,
   ExoplanetPredictionComparisonResponse,
+  DashboardResponse,
 } from '@/types/exoplanet';
 import { scientistFormSchema } from './schemas/scientist-form-schema';
 import { useLanguage } from '@/lib/i18n/language-context';
+import { instance } from '@/lib/api';
+import { DashboardCards } from '../dashboard-cards';
 
 type ScientistFormValues = z.infer<typeof scientistFormSchema>;
 
@@ -124,6 +127,9 @@ export function ScientistForm() {
   const [detection, setDetection] = useState<DetectionResult | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [nasaVideoLink, setNasaVideoLink] = useState<string | null>(null);
+  const [dashboardData, setDashboardData] = useState<DashboardResponse | null>(
+    null
+  );
 
   const {
     register,
@@ -182,6 +188,7 @@ export function ScientistForm() {
     setDetection(null);
     setApiError(null);
     setNasaVideoLink(null);
+    setDashboardData(null);
   }
 
   const formatLinkToNasaVideo = (planetName: string) => {
@@ -193,32 +200,34 @@ export function ScientistForm() {
     setApiError(null);
     setDetection(null);
     setNasaVideoLink(null);
+    setDashboardData(null);
 
     try {
-      // Chamadas com Axios e tipagem AxiosResponse
+      // 1. Primeiro: Fazer a predição
       const predictResponse: AxiosResponse<ExoplanetPredictionResponse> =
-        await axios.post(
-          'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/predict/scientist',
-          values
-        );
+        await instance.post('/predict/scientist', values);
 
       const compareResponse: AxiosResponse<ExoplanetPredictionComparisonResponse> =
-        await axios.post(
-          'https://exo-ai-api-dcctg6emdmd4dfd2.canadacentral-01.azurewebsites.net/api/v1/compare/scientist',
-          values
+        await instance.post('/compare/scientist', values);
+
+      if (predictResponse.data.prediction_id) {
+        const dashboardResponse: AxiosResponse<DashboardResponse> =
+          await instance.get(
+            `/dashboard/scientific/${predictResponse.data.prediction_id}`
+          );
+
+        const data = predictResponse.data;
+        setDetection(mapPredictionToDetection(data));
+
+        const compareData = compareResponse.data;
+        setNasaVideoLink(
+          formatLinkToNasaVideo(compareData.similar_exoplanets[0].planet_name)
         );
 
-      // Acessar dados tipados através de .data
-      const compareData = compareResponse.data;
-      setNasaVideoLink(
-        formatLinkToNasaVideo(compareData.similar_exoplanets[0].planet_name)
-      );
-
-      const data = predictResponse.data;
-      setDetection(mapPredictionToDetection(data));
+        setDashboardData(dashboardResponse.data);
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Tratamento específico de erros do Axios
         const message = error.response?.data?.message || error.message;
         setApiError(message);
       } else {
@@ -342,7 +351,7 @@ export function ScientistForm() {
               />
 
               {nasaVideoLink ? (
-                <div className="w-full flex justify-center p-4 flex-col gap-4">
+                <div className="w-full flex justify-center p-4 flex-col gap-4 py-20">
                   <header className="text-center">
                     <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300/80">
                       {t('nasa.subtitle')}
@@ -363,6 +372,12 @@ export function ScientistForm() {
                       className="w-full max-w-7xl rounded-2xl border border-red-500"
                     ></iframe>
                   </div>
+                </div>
+              ) : null}
+
+              {dashboardData ? (
+                <div className="w-full p-4">
+                  <DashboardCards dashboardData={dashboardData} />
                 </div>
               ) : null}
 
